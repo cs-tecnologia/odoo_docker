@@ -157,8 +157,8 @@ RUN set -x; \
         git clone -b 14.0 --depth 1 https://github.com/OCA/delivery-carrier.git  /opt/odoo/additional_addons/delivery-carrier  &&\
         pip3 install -r /opt/odoo/additional_addons/delivery-carrier/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/mis-builder.git  /opt/odoo/additional_addons/mis-builder  &&\
-        pip3 install -r /opt/odoo/additional_addons/mis-builder/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/mis-builder.git  /opt/odoo/additional_addons/mis-builder &&\
+        #pip3 install -r /opt/odoo/additional_addons/mis-builder/requirements.txt &&\
 		#
         git clone -b 14.0 --depth 1 https://github.com/OCA/stock-logistics-workflow.git   /opt/odoo/additional_addons/stock-logistics-workflow   &&\
         pip3 install -r /opt/odoo/additional_addons/stock-logistics-workflow/requirements.txt &&\
@@ -167,10 +167,10 @@ RUN set -x; \
         pip3 install -r /opt/odoo/additional_addons/account-reconcile/requirements.txt &&\
 		#
         git clone -b 14.0 --depth 1 https://github.com/OCA/currency.git   /opt/odoo/additional_addons/currency  &&\
-        pip3 install -r /opt/odoo/additional_addons/currency/requirements.txt &&\
+        #pip3 install -r /opt/odoo/additional_addons/currency/requirements.txt &&\
 		#
         git clone -b 14.0 --depth 1 https://github.com/OCA/purchase-workflow.git   /opt/odoo/additional_addons/purchase-workflow  &&\
-        pip3 install -r /opt/odoo/additional_addons/purchase-workflow/requirements.txt &&\
+        #pip3 install -r /opt/odoo/additional_addons/purchase-workflow/requirements.txt &&\
 		#
         git clone -b 14.0 --depth 1 https://github.com/OCA/sale-workflow.git   /opt/odoo/additional_addons/sale-workflow   &&\
         pip3 install -r /opt/odoo/additional_addons/sale-workflow/requirements.txt &&\
