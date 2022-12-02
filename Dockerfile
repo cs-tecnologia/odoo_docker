@@ -10,7 +10,8 @@ SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 ENV APT_DEPS='build-essential libldap2-dev libpq-dev libsasl2-dev' \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
-    PGDATABASE=odoo14-cmp
+    PGDATABASE=odoo14-compress \
+    LIST_DB=true
 ENV PIP_ROOT_USER_ACTION=ignore
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
@@ -141,61 +142,38 @@ RUN set -x; \
 
 # Install Odoo OCA default dependencies
 RUN set -x; \
-        git clone -b 14.0 --depth 1 https://github.com/OCA/l10n-brazil.git /tmp/oca-repos/l10n-brazil &&\
-		rm -rf /tmp/oca-repos/l10n-brazil/.git &&\
-        mv /tmp/oca-repos/l10n-brazil/*.* /opt/odoo/additional_addons/ &&\
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/l10n-brazil.git /opt/odoo/additional_addons/l10n-brazil &&\
+        pip3 install -r /opt/odoo/additional_addons/l10n-brazil/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/account-invoicing.git /tmp/oca-repos/account-invoicing &&\
-		rm -rf /tmp/oca-repos/account-invoicing/.git &&\
-        mv /tmp/oca-repos/account-invoicing/*.* /opt/odoo/additional_addons/ &&\		
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/account-invoicing.git /opt/odoo/additional_addons/account-invoicing &&\
+        pip3 install -r opt/odoo/additional_addons/account-invoicing/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/account-payment.git /tmp/oca-repos/account-payment &&\
-		rm -rf /tmp/oca-repos/account-payment/.git &&\
-        mv /tmp/oca-repos/account-payment/*.* /opt/odoo/additional_addons/ &&\		
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/account-payment.git /opt/odoo/additional_addons/account-payment &&\
+        pip3 install -r /opt/odoo/additional_addons/account-payment/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/bank-payment.git  /tmp/oca-repos/bank-payment &&\
-		rm -rf /tmp/oca-repos/bank-payment/.git &&\
-        mv /tmp/oca-repos/bank-payment/*.* /opt/odoo/additional_addons/ &&\				
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/bank-payment.git  /opt/odoo/additional_addons/bank-payment &&\
+        pip3 install -r /opt/odoo/additional_addons/bank-payment/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/delivery-carrier.git  /tmp/oca-repos/delivery-carrier  &&\
-		rm -rf /tmp/oca-repos/delivery-carrier/.git &&\
-        mv /tmp/oca-repos/delivery-carrier/*.* /opt/odoo/additional_addons/ &&\				
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/delivery-carrier.git  /opt/odoo/additional_addons/delivery-carrier  &&\
+        pip3 install -r /opt/odoo/additional_addons/delivery-carrier/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/mis-builder.git  /tmp/oca-repos/mis-builder  &&\
-		rm -rf /tmp/oca-repos/mis-builder/.git &&\
-        mv /tmp/oca-repos/mis-builder/*.* /opt/odoo/additional_addons/ &&\						
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/mis-builder.git  /opt/odoo/additional_addons/mis-builder  &&\
+        pip3 install -r /opt/odoo/additional_addons/mis-builder/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/stock-logistics-workflow.git   /tmp/oca-repos/stock-logistics-workflow   &&\
-		rm -rf /tmp/oca-repos/stock-logistics-workflow/.git &&\
-        mv /tmp/oca-repos/stock-logistics-workflow/*.* /opt/odoo/additional_addons/ &&\				
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/stock-logistics-workflow.git   /opt/odoo/additional_addons/stock-logistics-workflow   &&\
+        pip3 install -r /opt/odoo/additional_addons/stock-logistics-workflow/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/account-reconcile.git   /tmp/oca-repos/account-reconcile  &&\
-		rm -rf /tmp/oca-repos/account-reconcile/.git &&\
-        mv /tmp/oca-repos/account-reconcile/*.* /opt/odoo/additional_addons/ &&\				
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/account-reconcile.git   /opt/odoo/additional_addons/account-reconcile  &&\
+        pip3 install -r /opt/odoo/additional_addons/account-reconcile/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/currency.git   /tmp/oca-repos/currency  &&\
-		rm -rf /tmp/oca-repos/currency/.git &&\
-        mv /tmp/oca-repos/currency/*.* /opt/odoo/additional_addons/ &&\						
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/currency.git   /opt/odoo/additional_addons/currency  &&\
+        pip3 install -r /opt/odoo/additional_addons/currency/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/purchase-workflow.git   /tmp/oca-repos/purchase-workflow  &&\
-		rm -rf /tmp/oca-repos/purchase-workflow/.git &&\
-        mv /tmp/oca-repos/purchase-workflow/*.* /opt/odoo/additional_addons/ &&\								
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/purchase-workflow.git   /opt/odoo/additional_addons/purchase-workflow  &&\
+        pip3 install -r /opt/odoo/additional_addons/purchase-workflow/requirements.txt &&\
 		#
-        git clone -b 14.0 --depth 1 https://github.com/OCA/sale-workflow.git   /tmp/oca-repos/sale-workflow   &&\
-		rm -rf /tmp/oca-repos/sale-workflow/.git &&\
-        mv /tmp/oca-repos/sale-workflow/*.* /opt/odoo/additional_addons/ &&\		        
-        pip3 install -r /opt/odoo/additional_addons/requirements.txt &&\
-        rm -rf /tmp/oca-repos/ &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/sale-workflow.git   /opt/odoo/additional_addons/sale-workflow   &&\
+        pip3 install -r /opt/odoo/additional_addons/sale-workflow/requirements.txt &&\
         #find /opt/odoo/additional_addons/*/i18n/ -type f -not -name 'fr.po' -delete &&\
         chown -R odoo:odoo /opt/odoo
 
