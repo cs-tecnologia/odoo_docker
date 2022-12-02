@@ -11,6 +11,7 @@ ENV APT_DEPS='build-essential libldap2-dev libpq-dev libsasl2-dev' \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     PGDATABASE=odoo14-cmp
+ENV PIP_ROOT_USER_ACTION=ignore
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN apt-get update -y && apt-get upgrade -y && \
@@ -87,8 +88,8 @@ RUN apt-get update -y && apt-get upgrade -y && \
     xfonts-base \
     xz-utils \
     zlib1g-dev \
-    && echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' >> /etc/apt/sources.list.d/postgresql.list\
-    && curl -SL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+    #&& echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' >> /etc/apt/sources.list.d/postgresql.list\
+    #&& curl -SL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
     && apt-get update -y && apt-get upgrade -y \
     && apt-get install -y libssl1.1 \
     && curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb \
@@ -110,18 +111,18 @@ RUN apt-get update -y && apt-get upgrade -y && \
     RUN apt-get install -y tzdata
 
 # install latest postgresql-client
-#RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
-#    && GNUPGHOME="$(mktemp -d)" \
-#    && export GNUPGHOME \
-#    && repokey='B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8' \
-#    && gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "${repokey}" \
-#    && gpg --batch --armor --export "${repokey}" > /etc/apt/trusted.gpg.d/pgdg.gpg.asc \
-#    && gpgconf --kill all \
-#    && rm -rf "$GNUPGHOME" \
-#    && apt-get update  \
-#    && apt-get install --no-install-recommends -y postgresql-client \
-#    && rm -f /etc/apt/sources.list.d/pgdg.list \
-#    && rm -rf /var/lib/apt/lists/*
+ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' > /etc/apt/sources.list.d/pgdg.list \
+    && GNUPGHOME="$(mktemp -d)" \
+    && export GNUPGHOME \
+    && repokey='B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8' \
+    && gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "${repokey}" \
+    && gpg --batch --armor --export "${repokey}" > /etc/apt/trusted.gpg.d/pgdg.gpg.asc \
+    && gpgconf --kill all \
+    && rm -rf "$GNUPGHOME" \
+    && apt-get update  \
+    && apt-get install --no-install-recommends -y postgresql-client \
+    && rm -f /etc/apt/sources.list.d/pgdg.list \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install rtlcss (on Debian buster)
 RUN npm install -g rtlcss

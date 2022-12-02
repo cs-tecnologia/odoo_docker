@@ -33,7 +33,7 @@ export PGPASSWORD=$value
 if ! psql -l | grep $PGDATABASE; then
 	echo "Database $PGDATABASE does not exist"
 	DB_ARGS+=("--load-language")
-	DB_ARGS+=("fr_FR")
+	DB_ARGS+=("pt_BR")
 else
         psql -qc 'CREATE EXTENSION IF NOT EXISTS unaccent'
 fi
