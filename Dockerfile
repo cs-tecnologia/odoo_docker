@@ -9,8 +9,9 @@ SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 # Generate locale C.UTF-8 for postgres and general locale data
 ENV APT_DEPS='build-essential libldap2-dev libpq-dev libsasl2-dev' \
     #PGDATABASE=odoo14-compress \
-    LIST_DB=true
-ENV PIP_ROOT_USER_ACTION=ignore
+    LIST_DB=true \
+    PIP_ROOT_USER_ACTION=ignore \
+    networks=nw-cs
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN apt-get update -y && apt-get upgrade -y && \
