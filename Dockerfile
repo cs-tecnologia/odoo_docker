@@ -8,9 +8,7 @@ SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
 # Generate locale C.UTF-8 for postgres and general locale data
 ENV APT_DEPS='build-essential libldap2-dev libpq-dev libsasl2-dev' \
-    LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8 \
-    PGDATABASE=odoo14-compress \
+    #PGDATABASE=odoo14-compress \
     LIST_DB=true
 ENV PIP_ROOT_USER_ACTION=ignore
 
@@ -105,7 +103,8 @@ RUN apt-get update -y && apt-get upgrade -y && \
 # definir as configurações locais (Locale) do servidor'
     RUN export LANGUAGE=pt_BR.UTF-8
     RUN export LANG=pt_BR.UTF-8
-    RUN locale-gen pt_BR pt_BR.UTF-8
+    RUN LC_ALL=pt_BR.UTF-8
+    RUN locale-gen en_US en_US.UTF-8 pt_BR.UTF-8
     RUN dpkg-reconfigure locales
     ARG DEBIAN_FRONTEND=noninteractive
     ENV TZ=America/Sao_Paulo
