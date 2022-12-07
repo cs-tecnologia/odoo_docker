@@ -99,6 +99,7 @@ RUN apt-get update -y && apt-get upgrade -y && \
     && /usr/local/bin/python -m pip install --upgrade pip \
     && pip3 install -r https://raw.githubusercontent.com/OCA/OCB/14.0/requirements.txt \
     && pip3 install -r https://raw.githubusercontent.com/OCA/l10n-brazil/14.0/requirements.txt \
+    && pip3 install signxml==2.9 \
     && apt-get -y autoremove 
 
 # definir as configurações locais (Locale) do servidor'
