@@ -1,7 +1,6 @@
-FROM python:3.10-slim-bullseye
-#FROM debian:buster-slim
-#FROM python:3.9
-#FROM ubuntu:22.04
+FROM python:3.10.9-bullseye
+#FROM python:3.10-slim-buster
+#FROM python:3.8-slim-bullseye
 ENV DEBIAN_FRONTEND noninteractive
 #MAINTAINER Odoo S.A. <info@odoo.com>
 
@@ -9,11 +8,11 @@ SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
 # Generate locale C.UTF-8 for postgres and general locale data
 ENV APT_DEPS='build-essential libldap2-dev libpq-dev libsasl2-dev' \
-    PGDATABASE=odoo14-compress \
-    LIST_DB=true \
-    PIP_ROOT_USER_ACTION=ignore \
-    networks=nw-cs \
-    db_host=172.18.0.2
+    #PGDATABASE=odoo-compress \
+    #LIST_DB=true \
+    PIP_ROOT_USER_ACTION=ignore 
+    #networks=nw-cs \
+    #db_host=172.18.0.2
 
 # Install some deps, lessc and less-plugin-clean-css, and wkhtmltopdf
 RUN apt-get update -y && apt-get upgrade -y && \
@@ -101,15 +100,48 @@ RUN apt-get update -y && apt-get upgrade -y && \
     #&& curl -o wkhtmltox.deb -sSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.6/wkhtmltox_0.12.6-1.buster_amd64.deb \
     #&& echo 'ea8277df4297afc507c61122f3c349af142f31e5 wkhtmltox.deb' | sha1sum -c - \
     #&& apt-get install -y --no-install-recommends ./wkhtmltox.deb \
-    #&& rm -rf /var/lib/apt/lists/* wkhtmltox.deb \
+    #&& rm -rf /var/lib/apt/lists/* wkhtmltox.deb \ 
     && wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_amd64.deb \
     && apt-get install ./wkhtmltox_0.12.6.1-2.bullseye_amd64.deb \
+    #&& wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_amd64.deb \
+    #&& apt-get install ./wkhtmltox_0.12.6-1.buster_amd64.deb \
+    && apt-get install -y --no-install-recommends ${APT_DEPS} \
     && /usr/local/bin/python -m pip install --upgrade pip \
     #&& pip install pyopenssl --upgrade \
+    && pip3 install -r https://raw.githubusercontent.com/OCA/OCB/14.0/requirements.txt \
+    #&& pip3 install -r https://raw.githubusercontent.com/odoo/odoo/14.0/requirements.txt \
     && pip install pyOpenSSL==20.0.1 \
     && pip install signxml==2.9 \
-    && pip3 install -r https://raw.githubusercontent.com/OCA/OCB/14.0/requirements.txt \
+    && pip install certifi==2022.9.24 \
+    && pip install pyOpenSSL==20.0.1 \
+    && pip install signxml==2.9 \
+    && pip install certifi==2022.9.24 \
+    && pip install acme==1.32.0 \
+    && pip install astor==0.8.1 \
+    && pip install Avalara==22.11.0 \
+    && pip install bcrypt==4.0.1 \
+    && pip install cryptography==38.0.3 \
+    && pip install dataclasses==0.6 \
+    && pip install dicttoxml==1.7.4 \
+    && pip install et-xmlfile==1.1.0 \
+    && pip install josepy==1.13.0 \
+    && pip install multidict==6.0.2 \
+    && pip install OdooRPC==0.9.0 \
+    && pip install openpyxl==3.0.10 \
+    && pip install openupgradelib==3.3.4 \
+    && pip install paramiko==2.12.0 \
+    && pip install phonenumbers==8.13.0 \
+    && pip install PyMeeus==0.5.11 \
+    && pip install PyNaCl==1.5.0 \
+    && pip install pyRFC3339==1.1 \
+    && pip install pysftp==0.2.9 \
+    && pip install pytz==2022.6 \
+    && pip install sentry-sdk==1.11.0 \
+    && pip install urllib3==1.26.12 \
+    && pip install yarl==1.8.1 \
+    && pip install zope.interface==5.5.1 \        
     && pip3 install -r https://raw.githubusercontent.com/OCA/l10n-brazil/14.0/requirements.txt \
+    && apt-get -y purge ${APT_DEPS} \
     && apt-get -y autoremove 
 
 # definir as configurações locais (Locale) do servidor'
@@ -145,8 +177,9 @@ COPY ./ssh_known_git_hosts /root/.ssh/known_hosts
 # Install Odoo and remove not French translations and .git directory to limit amount of data used by container
 RUN set -x; \
         useradd -l --create-home --home-dir /opt/odoo --no-log-init odoo &&\
-        /bin/bash -c "mkdir -p /opt/odoo/{etc,odoo,additional_addons,private_addons,data,private}" &&\
+        /bin/bash -c "mkdir -p /opt/odoo/{etc,log,odoo,additional_addons,private_addons,data,private}" &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/OCB.git /opt/odoo/odoo &&\
+        #git clone https://www.github.com/odoo/odoo --depth 1 --branch 14.0 /opt/odoo/odoo &&\
         rm -rf /opt/odoo/odoo/.git &&\
         #find /opt/odoo/odoo/addons/*/i18n/ /opt/odoo/odoo/odoo/addons/base/i18n/ -type f -not -name 'fr.po' -delete &&\
         chown -R odoo:odoo /opt/odoo
