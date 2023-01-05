@@ -142,7 +142,10 @@ RUN set -x; \
         git clone -b 14.0 --depth 1 https://github.com/OCA/currency.git   /opt/odoo/additional_addons/currency  &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/purchase-workflow.git   /opt/odoo/additional_addons/purchase-workflow  &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/sale-workflow.git   /opt/odoo/additional_addons/sale-workflow   &&\
-      #
+        #HelpDesk
+        git clone --depth 1 --branch 14.0 https://github.com/OCA/helpdesk &&\
+        #Serviço de campo
+        git clone --depth 1 --branch 14.0 https://github.com/OCA/field-service &&\
         pip3 install -r /opt/odoo/additional_addons/l10n-brazil/requirements.txt &&\
         pip3 install -r /opt/odoo/additional_addons/account-invoicing/requirements.txt &&\
         pip3 install -r /opt/odoo/additional_addons/account-payment/requirements.txt &&\
@@ -153,7 +156,9 @@ RUN set -x; \
         pip3 install -r /opt/odoo/additional_addons/account-reconcile/requirements.txt &&\
         #pip3 install -r /opt/odoo/additional_addons/currency/requirements.txt &&\
         #pip3 install -r /opt/odoo/additional_addons/purchase-workflow/requirements.txt &&\
-        pip3 install -r /opt/odoo/additional_addons/sale-workflow/requirements.txt \
+        pip3 install -r /opt/odoo/additional_addons/sale-workflow/requirements.txt &&\
+        pip3 install -r helpdesk/requirements.txt &&\
+        pip3 install -r field-service/requirements.txt \
         &&pip install erpbrasil.assinatura==1.5.0 \
         &&pip install pyOpenSSL==20.0.1 \
         && pip install signxml==2.9 \
