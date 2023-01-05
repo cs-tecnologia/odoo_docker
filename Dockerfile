@@ -154,45 +154,41 @@ RUN set -x; \
         #pip3 install -r /opt/odoo/additional_addons/currency/requirements.txt &&\
         #pip3 install -r /opt/odoo/additional_addons/purchase-workflow/requirements.txt &&\
         pip3 install -r /opt/odoo/additional_addons/sale-workflow/requirements.txt \
-        #pip install -e git+https://github.com/Engenere/erpbrasil.assinatura@fix-namespaces#egg=erpbrasil.assinatura \
-        #pip install -e git+https://github.com/erpbrasil/erpbrasil.assinatura@master#egg=erpbrasil.assinatura \
-        #pip install --upgrade git+https://github.com/erpbrasil/erpbrasil.assinatura.git@master \
-        #&& pip install pyOpenSSL==20.0.1 \
-        #&& pip install signxml==2.9 \
-        #&& pip install certifi==2022.9.24 \
-        #&& pip install signxml==2.9 \
-        #&& pip install certifi==2022.9.24 \
-        #&& pip install acme==1.32.0 \
-        #&& pip install astor==0.8.1 \
-        #&& pip install Avalara==22.11.0 \
-        #&& pip install bcrypt==4.0.1 \
-        #&& pip install cryptography==38.0.3 \
-        #&& pip install dataclasses==0.6 \
-        #&& pip install dicttoxml==1.7.4 \
-        #&& pip install et-xmlfile==1.1.0 \
-        #&& pip install josepy==1.13.0 \
-        #&& pip install multidict==6.0.2 \
-        #&& pip install OdooRPC==0.9.0 \
-        #&& pip install openpyxl==3.0.10 \
-        #&& pip install openupgradelib==3.3.4 \
-        #&& pip install paramiko==2.12.0 \
-        #&& pip install phonenumbers==8.13.0 \
-        #&& pip install PyMeeus==0.5.11 \
-        #&& pip install PyNaCl==1.5.0 \
-        #&& pip install pyRFC3339==1.1 \
-        #&& pip install pysftp==0.2.8 \
-        #&& pip install pytz==2022.6 \
-        #&& pip install sentry-sdk==1.11.0 \
-        #&& pip install urllib3==1.26.12 \
-        #&& pip install yarl==1.8.1 \
-        #&& pip install zope.interface==5.5.1 \       
-        #&& pip3 install --upgrade setuptools \
-        #&& pip3 install python3-cnab \
-        #&& pip3 install py-Asterisk \
-        #&& pip3 install psycopg2-binary \
-        #&& pip3 install aiohttp \       
-      #
-        && chown -R odoo:odoo /opt/odoo \
+        &&pip install erpbrasil.assinatura==1.5.0 \
+        &&pip install pyOpenSSL==20.0.1 \
+        && pip install signxml==2.9 \
+        && pip install certifi==2022.9.24 \
+        && pip install signxml==2.9 \
+        && pip install certifi==2022.9.24 \
+        && pip install acme==1.32.0 \
+        && pip install astor==0.8.1 \
+        && pip install Avalara==22.11.0 \
+        && pip install bcrypt==4.0.1 \
+        && pip install cryptography==38.0.3 \
+        && pip install dataclasses==0.6 \
+        && pip install dicttoxml==1.7.4 \
+        && pip install et-xmlfile==1.1.0 \
+        && pip install josepy==1.13.0 \
+        && pip install multidict==6.0.2 \
+        && pip install OdooRPC==0.9.0 \
+        && pip install openpyxl==3.0.10 \
+        && pip install openupgradelib==3.3.4 \
+        && pip install paramiko==2.12.0 \
+        && pip install phonenumbers==8.13.0 \
+        && pip install PyMeeus==0.5.11 \
+        && pip install PyNaCl==1.5.0 \
+        && pip install pyRFC3339==1.1 \
+        && pip install pysftp==0.2.8 \
+        && pip install pytz==2022.6 \
+        && pip install sentry-sdk==1.11.0 \
+        && pip install urllib3==1.26.12 \
+        && pip install yarl==1.8.1 \
+        && pip install zope.interface==5.5.1 \       
+        && pip3 install --upgrade setuptools \
+        && pip3 install python3-cnab \
+        && pip3 install py-Asterisk \
+        && pip3 install psycopg2-binary \
+        && pip3 install aiohttp \       
         && chown -R odoo:odoo /usr/local
 
 # Copy entrypoint script and Odoo configuration file
