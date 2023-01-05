@@ -24,6 +24,7 @@ RUN set -x; \
         apt-get update -y && apt-get upgrade -y &&\
         apt-get install -y --no-install-recommends \
  #libjpeg8-dev \
+    nano \
     build-essential \
     ca-certificates \
     curl \
@@ -34,6 +35,7 @@ RUN set -x; \
     fonts-noto-cjk \
     fonts-symbola \
     git \
+    sudo \
     gnupg \
     gnupg1 \
     gnupg2 \
@@ -90,7 +92,7 @@ RUN set -x; \
     python3-wheel \
     python3-xlrd \
     python3-xlwt \
-    texlive-fonts-extra \
+    #texlive-fonts-extra \
     xfonts-75dpi \
     xfonts-base \
     xz-utils \
@@ -106,8 +108,9 @@ RUN set -x; \
         apt-get install -y --no-install-recommends ${APT_DEPS} &&\
         apt-get install --reinstall ca-certificates &&\
         /usr/local/bin/python -m pip install --upgrade pip &&\
-        pip3 install -r https://raw.githubusercontent.com/OCA/OCB/14.0/requirements.txt &&\
-        pip3 install phonenumbers simplejson gevent PyYAML zxcvbn &&\
+        #pip3 install -r https://raw.githubusercontent.com/OCA/OCB/14.0/requirements.txt &&\
+        pip3 install -r https://raw.githubusercontent.com/odoo/odoo/14.0/requirements.txt &&\
+        #pip3 install phonenumbers simplejson gevent PyYAML zxcvbn &&\
         apt-get -y purge ${APT_DEPS} &&\
         apt-get -y autoremove &&\
         rm -rf /var/lib/apt/lists/* wkhtmltox_0.12.6.1-2.bullseye_amd64.deb
@@ -116,18 +119,22 @@ COPY ./ssh_known_git_hosts /root/.ssh/known_hosts
 
 # Install Odoo and remove not French translations and .git directory to limit amount of data used by container
 RUN set -x; \
-        useradd -l --create-home --home-dir /opt/odoo --no-log-init odoo &&\
+        #useradd -l --create-home --home-dir /opt/odoo --no-log-init -p postgres odoo &&\
+        useradd -m -U -r -d /opt/odoo -s /bin/bash odoo &&\
         /bin/bash -c "mkdir -p /opt/odoo/{etc,log,odoo,additional_addons,private_addons,data,private}" &&\
-        git clone -b 14.0 --depth 1 https://github.com/OCA/OCB.git /opt/odoo/odoo &&\
+        #git clone -b 14.0 --depth 1 https://github.com/OCA/OCB.git /opt/odoo/odoo &&\
+        git clone -b 14.0 --depth 1 https://www.github.com/odoo/odoo /opt/odoo/odoo &&\
         rm -rf /opt/odoo/odoo/.git &&\
         chown -R odoo:odoo /opt/odoo
 
 # Install Odoo OCA default dependencies
 RUN set -x; \
         git clone -b 14.0 --depth 1 https://github.com/OCA/l10n-brazil.git /opt/odoo/additional_addons/l10n-brazil &&\
+        #git clone -b 14.0-ref-l10n_br_account_nfe --depth 1 https://github.com/Engenere/l10n-brazil.git /opt/odoo/additional_addons/l10n-brazil &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/account-invoicing.git /opt/odoo/additional_addons/account-invoicing &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/account-payment.git /opt/odoo/additional_addons/account-payment &&\
-        git clone -b 14.0 --depth 1 https://github.com/OCA/bank-payment.git  /opt/odoo/additional_addons/bank-payment &&\
+        #git clone -b 14.0 --depth 1 https://github.com/OCA/bank-payment.git  /opt/odoo/additional_addons/bank-payment &&\
+        git clone -b 14.0 --depth 1 https://github.com/Engenere/bank-payment.git  /opt/odoo/additional_addons/bank-payment &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/delivery-carrier.git  /opt/odoo/additional_addons/delivery-carrier  &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/mis-builder.git  /opt/odoo/additional_addons/mis-builder &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/stock-logistics-workflow.git   /opt/odoo/additional_addons/stock-logistics-workflow   &&\
@@ -147,42 +154,46 @@ RUN set -x; \
         #pip3 install -r /opt/odoo/additional_addons/currency/requirements.txt &&\
         #pip3 install -r /opt/odoo/additional_addons/purchase-workflow/requirements.txt &&\
         pip3 install -r /opt/odoo/additional_addons/sale-workflow/requirements.txt \
-        && pip install pyOpenSSL==20.0.1 \
-        && pip install signxml==2.9 \
-        && pip install certifi==2022.9.24 \
-        && pip install signxml==2.9 \
-        && pip install certifi==2022.9.24 \
-        && pip install acme==1.32.0 \
-        && pip install astor==0.8.1 \
-        && pip install Avalara==22.11.0 \
-        && pip install bcrypt==4.0.1 \
-        && pip install cryptography==38.0.3 \
-        && pip install dataclasses==0.6 \
-        && pip install dicttoxml==1.7.4 \
-        && pip install et-xmlfile==1.1.0 \
-        && pip install josepy==1.13.0 \
-        && pip install multidict==6.0.2 \
-        && pip install OdooRPC==0.9.0 \
-        && pip install openpyxl==3.0.10 \
-        && pip install openupgradelib==3.3.4 \
-        && pip install paramiko==2.12.0 \
-        && pip install phonenumbers==8.13.0 \
-        && pip install PyMeeus==0.5.11 \
-        && pip install PyNaCl==1.5.0 \
-        && pip install pyRFC3339==1.1 \
-        && pip install pysftp==0.2.8 \
-        && pip install pytz==2022.6 \
-        && pip install sentry-sdk==1.11.0 \
-        && pip install urllib3==1.26.12 \
-        && pip install yarl==1.8.1 \
-        && pip install zope.interface==5.5.1 \       
-        && pip3 install --upgrade setuptools \
-        && pip3 install python3-cnab \
-        && pip3 install py-Asterisk \
-        && pip3 install psycopg2-binary \
-        && pip3 install aiohttp \       
+        #pip install -e git+https://github.com/Engenere/erpbrasil.assinatura@fix-namespaces#egg=erpbrasil.assinatura \
+        #pip install -e git+https://github.com/erpbrasil/erpbrasil.assinatura@master#egg=erpbrasil.assinatura \
+        #pip install --upgrade git+https://github.com/erpbrasil/erpbrasil.assinatura.git@master \
+        #&& pip install pyOpenSSL==20.0.1 \
+        #&& pip install signxml==2.9 \
+        #&& pip install certifi==2022.9.24 \
+        #&& pip install signxml==2.9 \
+        #&& pip install certifi==2022.9.24 \
+        #&& pip install acme==1.32.0 \
+        #&& pip install astor==0.8.1 \
+        #&& pip install Avalara==22.11.0 \
+        #&& pip install bcrypt==4.0.1 \
+        #&& pip install cryptography==38.0.3 \
+        #&& pip install dataclasses==0.6 \
+        #&& pip install dicttoxml==1.7.4 \
+        #&& pip install et-xmlfile==1.1.0 \
+        #&& pip install josepy==1.13.0 \
+        #&& pip install multidict==6.0.2 \
+        #&& pip install OdooRPC==0.9.0 \
+        #&& pip install openpyxl==3.0.10 \
+        #&& pip install openupgradelib==3.3.4 \
+        #&& pip install paramiko==2.12.0 \
+        #&& pip install phonenumbers==8.13.0 \
+        #&& pip install PyMeeus==0.5.11 \
+        #&& pip install PyNaCl==1.5.0 \
+        #&& pip install pyRFC3339==1.1 \
+        #&& pip install pysftp==0.2.8 \
+        #&& pip install pytz==2022.6 \
+        #&& pip install sentry-sdk==1.11.0 \
+        #&& pip install urllib3==1.26.12 \
+        #&& pip install yarl==1.8.1 \
+        #&& pip install zope.interface==5.5.1 \       
+        #&& pip3 install --upgrade setuptools \
+        #&& pip3 install python3-cnab \
+        #&& pip3 install py-Asterisk \
+        #&& pip3 install psycopg2-binary \
+        #&& pip3 install aiohttp \       
       #
-        && chown -R odoo:odoo /opt/odoo
+        && chown -R odoo:odoo /opt/odoo \
+        && chown -R odoo:odoo /usr/local
 
 # Copy entrypoint script and Odoo configuration file
 COPY ./entrypoint.sh /
@@ -190,7 +201,7 @@ COPY ./odoo.conf /opt/odoo/etc/odoo.conf
 RUN chown odoo:odoo /opt/odoo/etc/odoo.conf
 
 # Mount /opt/odoo/data to allow restoring filestore
-VOLUME ["/opt/odoo/data/"]
+#VOLUME ["/opt/odoo/data/"]
 
 # Expose Odoo services
 EXPOSE 8069

@@ -1,0 +1,5 @@
+-   Manter um fork (copia da versão que esta funcionando na conta do git para que evite atualizações dos desenvolvedores antes de serem testadas. 
+    Sempre instalar o Odoo utilizando os modulos pelo fork da CS.
+    Atualizar o Fork da CS somente após testes das atualizações disponibilizadas pelo desenvolvedores.
+- 
+    
