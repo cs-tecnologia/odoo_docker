@@ -132,9 +132,10 @@ RUN set -x; \
         git clone -b 14.0 --depth 1 https://github.com/OCA/l10n-brazil.git /opt/odoo/additional_addons/l10n-brazil &&\
         #git clone -b 14.0-ref-l10n_br_account_nfe --depth 1 https://github.com/Engenere/l10n-brazil.git /opt/odoo/additional_addons/l10n-brazil &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/account-invoicing.git /opt/odoo/additional_addons/account-invoicing &&\
-        git clone -b 14.0 --depth 1 https://github.com/OCA/account-payment.git /opt/odoo/additional_addons/account-payment &&\
+        #git clone -b 14.0 --depth 1 https://github.com/OCA/account-payment.git /opt/odoo/additional_addons/account-payment &&\
         #git clone -b 14.0 --depth 1 https://github.com/OCA/bank-payment.git  /opt/odoo/additional_addons/bank-payment &&\
-        git clone -b 14.0 --depth 1 https://github.com/Engenere/bank-payment.git  /opt/odoo/additional_addons/bank-payment &&\
+        git clone -b 14.0 --depth 1 https://github.com/kmee/account-payment.git /opt/odoo/additional_addons/account-payment &&\
+        git clone -b 14.0 --depth 1 https://github.com/kmee/bank-payment.git  /opt/odoo/additional_addons/bank-payment &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/delivery-carrier.git  /opt/odoo/additional_addons/delivery-carrier  &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/mis-builder.git  /opt/odoo/additional_addons/mis-builder &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/stock-logistics-workflow.git   /opt/odoo/additional_addons/stock-logistics-workflow   &&\
@@ -142,10 +143,14 @@ RUN set -x; \
         git clone -b 14.0 --depth 1 https://github.com/OCA/currency.git   /opt/odoo/additional_addons/currency  &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/purchase-workflow.git   /opt/odoo/additional_addons/purchase-workflow  &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/sale-workflow.git   /opt/odoo/additional_addons/sale-workflow   &&\
+        #Fluxo de Caixa
+        git clone -b 14.0 --depth 1 https://github.com/OCA/account-financial-reporting.git   /opt/odoo/additional_addons/account-financial-reporting &&\
         #HelpDesk
-        git clone --depth 1 --branch 14.0 https://github.com/OCA/helpdesk &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/helpdesk.git /opt/odoo/additional_addons/helpdesk   &&\
         #Serviço de campo
-        git clone --depth 1 --branch 14.0 https://github.com/OCA/field-service &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/field-service.git /opt/odoo/additional_addons/field-service   &&\
+        #MRD - planejamento materiais
+        git clone -b 14.0 --depth 1 https://github.com/OCA/ddmrp.git /opt/odoo/additional_addons/ddmrp   &&\
         pip3 install -r /opt/odoo/additional_addons/l10n-brazil/requirements.txt &&\
         pip3 install -r /opt/odoo/additional_addons/account-invoicing/requirements.txt &&\
         pip3 install -r /opt/odoo/additional_addons/account-payment/requirements.txt &&\
@@ -157,8 +162,10 @@ RUN set -x; \
         #pip3 install -r /opt/odoo/additional_addons/currency/requirements.txt &&\
         #pip3 install -r /opt/odoo/additional_addons/purchase-workflow/requirements.txt &&\
         pip3 install -r /opt/odoo/additional_addons/sale-workflow/requirements.txt &&\
-        pip3 install -r helpdesk/requirements.txt &&\
-        pip3 install -r field-service/requirements.txt \
+        #pip3 install -r /opt/odoo/additional_addons/account-financial-reporting &&\
+        #pip3 install -r /opt/odoo/additional_addons/helpdesk/requirements.txt &&\
+        pip3 install -r /opt/odoo/additional_addons/field-service/requirements.txt &&\
+        pip3 install -r /opt/odoo/additional_addons/ddmrp/requirements.txt \
         &&pip install erpbrasil.assinatura==1.5.0 \
         &&pip install pyOpenSSL==20.0.1 \
         && pip install signxml==2.9 \
