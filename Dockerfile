@@ -29,6 +29,7 @@ RUN set -x; \
     ca-certificates \
     curl \
     wget \
+    swig \
     default-jre \
     ure \
     dirmngr \
@@ -138,6 +139,8 @@ RUN set -x; \
         git clone -b 14.0 --depth 1 https://github.com/kmee/bank-payment.git  /opt/odoo/additional_addons/bank-payment &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/delivery-carrier.git  /opt/odoo/additional_addons/delivery-carrier  &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/mis-builder.git  /opt/odoo/additional_addons/mis-builder &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/reporting-engine.git  /opt/odoo/additional_addons/reporting-engine &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/server-ux.git  /opt/odoo/additional_addons/server-ux &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/stock-logistics-workflow.git   /opt/odoo/additional_addons/stock-logistics-workflow   &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/account-reconcile.git   /opt/odoo/additional_addons/account-reconcile  &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/currency.git   /opt/odoo/additional_addons/currency  &&\
@@ -157,6 +160,8 @@ RUN set -x; \
         pip3 install -r /opt/odoo/additional_addons/bank-payment/requirements.txt &&\
         pip3 install -r /opt/odoo/additional_addons/delivery-carrier/requirements.txt &&\
         #pip3 install -r /opt/odoo/additional_addons/mis-builder/requirements.txt &&\
+        pip3 install -r /opt/odoo/additional_addons/reporting-engine/requirements.txt &&\
+        pip3 install -r /opt/odoo/additional_addons/server-ux/requirements.txt &&\
         pip3 install -r /opt/odoo/additional_addons/stock-logistics-workflow/requirements.txt &&\
         pip3 install -r /opt/odoo/additional_addons/account-reconcile/requirements.txt &&\
         #pip3 install -r /opt/odoo/additional_addons/currency/requirements.txt &&\
