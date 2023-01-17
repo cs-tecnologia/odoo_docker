@@ -130,8 +130,8 @@ RUN set -x; \
 
 # Install Odoo OCA default dependencies
 RUN set -x; \
-        #git clone -b 14.0 --depth 1 https://github.com/OCA/l10n-brazil.git /opt/odoo/additional_addons/l10n-brazil &&\
-        git clone -b 14.0-fix-purchase-report --depth 1 https://github.com/akretion/l10n-brazil.git /opt/odoo/additional_addons/l10n-brazil &&\
+        git clone -b 14.0 --depth 1 https://github.com/OCA/l10n-brazil.git /opt/odoo/additional_addons/l10n-brazil &&\
+        #git clone -b 14.0-fix-purchase-report --depth 1 https://github.com/akretion/l10n-brazil.git /opt/odoo/additional_addons/l10n-brazil &&\
         git clone -b 14.0 --depth 1 https://github.com/OCA/account-invoicing.git /opt/odoo/additional_addons/account-invoicing &&\
         #git clone -b 14.0 --depth 1 https://github.com/OCA/account-payment.git /opt/odoo/additional_addons/account-payment &&\
         #git clone -b 14.0 --depth 1 https://github.com/OCA/bank-payment.git  /opt/odoo/additional_addons/bank-payment &&\
