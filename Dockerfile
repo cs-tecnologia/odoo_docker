@@ -2,10 +2,10 @@
 FROM python:3.10-bullseye
 
 ENV APT_DEPS='build-essential libldap2-dev libpq-dev libsasl2-dev' \
-   PIP_ROOT_USER_ACTION=ignore 
+   PIP_ROOT_USER_ACTION=ignore \
    #LANG=pt_BR.UTF-8 \
    #LC_ALL=pt_BR.UTF-8 
-   #PGDATABASE=odoo14-compress
+   PGDATABASE=odoo14-compress
 
 # definir as configurações locais (Locale) do servidor'
     RUN dpkg-reconfigure tzdata
